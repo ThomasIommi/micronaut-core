@@ -315,7 +315,7 @@ class CorsFilterSpec extends Specification {
     }
 
     @Property(name = "micronaut.server.cors.configurations.foo.allowed-origins", value = "http://www.foo.com")
-    @Property(name = "micronaut.server.cors.configurations.foo.exposed-headers", value = "Foo-Header,Bar-Header")
+    @Property(name = "micronaut.server.cors.configurations.foo.allowed-methods", value = "GET")
     void "A preflight request is rejected for a route that does exist but doesn't handle the requested HTTP Method"() {
         given:
         HttpRequest request = HttpRequest.OPTIONS("/example")

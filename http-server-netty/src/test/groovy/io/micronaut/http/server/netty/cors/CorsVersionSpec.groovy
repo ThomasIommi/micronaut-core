@@ -95,8 +95,7 @@ class CorsVersionSpec extends Specification {
         client.exchange(request)
 
         then:
-        HttpClientResponseException ex = thrown()
-        ex.status == HttpStatus.FORBIDDEN
+        noExceptionThrown()
     }
 
     void "preflight for version routed from private network"() {

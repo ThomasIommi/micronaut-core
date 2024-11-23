@@ -301,7 +301,7 @@ class CorsFilterSpec extends Specification {
 
     @Property(name = "micronaut.server.cors.configurations.foo.allowed-origins", value = "http://www.foo.com")
     @Property(name = "micronaut.server.cors.configurations.foo.allowed-methods", value = "GET")
-    void "A preflight request is rejected for a non-existing route"() {
+    void "A preflight request is NOT rejected for a non-existing route if CORS configuration is valid"() {
         given:
         HttpRequest request = HttpRequest.OPTIONS("/doesnt-exists-route")
                 .header(HttpHeaders.ORIGIN, 'http://www.foo.com')
@@ -311,7 +311,7 @@ class CorsFilterSpec extends Specification {
         HttpResponse<?> response = execute(request)
 
         then:
-        HttpStatus.FORBIDDEN == response.status()
+        HttpStatus.OK == response.status()
     }
 
     @Property(name = "micronaut.server.cors.configurations.foo.allowed-origins", value = "http://www.foo.com")

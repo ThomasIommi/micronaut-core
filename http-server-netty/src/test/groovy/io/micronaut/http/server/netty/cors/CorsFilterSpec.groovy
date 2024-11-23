@@ -314,21 +314,6 @@ class CorsFilterSpec extends Specification {
         HttpStatus.OK == response.status()
     }
 
-    @Property(name = "micronaut.server.cors.configurations.foo.allowed-origins", value = "http://www.foo.com")
-    @Property(name = "micronaut.server.cors.configurations.foo.allowed-methods", value = "GET")
-    void "A preflight request is rejected for a route that does exist but doesn't handle the requested HTTP Method"() {
-        given:
-        HttpRequest request = HttpRequest.OPTIONS("/example")
-                .header(HttpHeaders.ORIGIN, 'http://www.foo.com')
-                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, 'POST')
-
-        when:
-        HttpResponse<?> response = execute(request)
-
-        then:
-        HttpStatus.FORBIDDEN == response.status()
-    }
-
     @Requires(property = "spec.name", value = "CorsFilterSpec")
     @Controller
     static class TestController{

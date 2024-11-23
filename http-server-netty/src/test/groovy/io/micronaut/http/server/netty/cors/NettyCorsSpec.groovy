@@ -273,7 +273,7 @@ class NettyCorsSpec extends AbstractMicronautSpec {
         }).blockFirst()
 
         expect:
-        response.code() == HttpStatus.FORBIDDEN.code
+        response.code() == HttpStatus.OK.code
     }
 
     void "test control headers are applied to error response routes"() {

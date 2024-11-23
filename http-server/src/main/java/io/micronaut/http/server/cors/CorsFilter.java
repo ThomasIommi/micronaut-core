@@ -89,7 +89,7 @@ public class CorsFilter implements Ordered, ConditionalFilter {
     /**
      * @param corsConfiguration The {@link CorsOriginConfiguration} instance
      * @param httpHostResolver  HTTP Host resolver
-     * @deprecated use {@link CorsFilter(HttpServerConfiguration, HttpHostResolver, Router)} instead.
+     * @deprecated use {@link  CorsFilter(HttpServerConfiguration, HttpHostResolver, Router)} instead.
      */
     @Deprecated(since = "4.7", forRemoval = true)
     public CorsFilter(HttpServerConfiguration.CorsConfiguration corsConfiguration,
@@ -494,18 +494,13 @@ public class CorsFilter implements Ordered, ConditionalFilter {
 
     @Nullable
     private boolean validatePreflightRequest(@NonNull HttpRequest<?> request,
-                                                @NonNull CorsOriginConfiguration config) {
+                                             @NonNull CorsOriginConfiguration config) {
         Optional<HttpMethod> methodToMatchOptional = validateMethodToMatch(request, config);
         if (methodToMatchOptional.isEmpty()) {
             return false;
         }
-        HttpMethod methodToMatch = methodToMatchOptional.get();
 
         if (!CorsUtil.isPreflightRequest(request)) {
-            return false;
-        }
-        List<HttpMethod> availableHttpMethods = router.findAny(request).stream().map(UriRouteMatch::getHttpMethod).toList();
-        if (availableHttpMethods.stream().noneMatch(method -> method.equals(methodToMatch))) {
             return false;
         }
 

@@ -112,7 +112,7 @@ class CorsVersionSpec extends Specification {
 
         when:
         request = HttpRequest.OPTIONS("/new-not-allowed-from-private")
-        preflightHeaders(null, true).each { k, v -> request.header(k, v)}
+        preflightHeaders("x-api-version", true).each { k, v -> request.header(k, v)}
         client.exchange(request)
 
         then:

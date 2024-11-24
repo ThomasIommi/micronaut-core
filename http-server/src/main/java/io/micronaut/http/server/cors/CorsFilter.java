@@ -495,16 +495,9 @@ public class CorsFilter implements Ordered, ConditionalFilter {
     @Nullable
     private boolean validatePreflightRequest(@NonNull HttpRequest<?> request,
                                              @NonNull CorsOriginConfiguration config) {
-        Optional<HttpMethod> methodToMatchOptional = validateMethodToMatch(request, config);
-        if (methodToMatchOptional.isEmpty()) {
-            return false;
-        }
-
-        if (!CorsUtil.isPreflightRequest(request)) {
-            return false;
-        }
-
-        if (!hasAllowedHeaders(request, config)) {
+        if (validateMethodToMatch(request, config).isEmpty() ||
+            !CorsUtil.isPreflightRequest(request) ||
+            !hasAllowedHeaders(request, config)) {
             return false;
         }
 
